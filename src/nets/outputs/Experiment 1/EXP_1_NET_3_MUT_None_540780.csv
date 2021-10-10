@@ -1,0 +1,1 @@
+net_type,run_index,repetition_index,mutation_rate,Sch 1,R1,M1,B1,Sch 2,R2,M2,B2,interaction,log(R1/R2),log(M1/M2),log(B1/B2),am,ar,ai,log(b),(log(M1/M2))^2,(log(R1/R2)) * (log(M1/M2)),(log(R1/R1))^2,Changeovers,A,B,C,G,B^2 - 4AC
