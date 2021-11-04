@@ -7,6 +7,14 @@ Translated May 23, 2021
 
 
 class BaseConverter(object):
-    '''
-    classdocs
-    '''
+	'''
+	classdocs
+	'''
+
+	@staticmethod
+	def convert_from_base_10(intToConvert, intBase):
+		raise NotImplementedError
+
+	@staticmethod
+	def convert_to_base_10(intToConvert, intBase):
+		raise NotImplementedError

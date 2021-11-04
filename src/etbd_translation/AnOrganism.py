@@ -7,8 +7,8 @@ Translated May 23, 2021
 from etbd_translation import Constants
 
 
-class AnOrganism(object):
-    '''
+class AnOrganism:
+    ''' 
     classdocs
     '''
 

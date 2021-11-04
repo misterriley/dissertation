@@ -14,7 +14,7 @@ class RISchedule(object):
     
     'Arranges a Random Interval Schedule.  
 
-    'The mean of the schedule can be passed to the constructor or it can be set via the Mean property.
+    'The mean of the schedule can be passed to the constructor or it can be set via the Mean property. 
     'A schedule object can also save and return obtained IRIs if desired.  To do so, set the SaveIRIs property to true 
     'from the calling program before the schedule is run, and then retrieve the IRIs from the IRIArray property after
     'the run is complete.

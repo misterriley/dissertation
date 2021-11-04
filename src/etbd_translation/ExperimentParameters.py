@@ -19,19 +19,20 @@ class ExperimentParameters(object):
         self.m_SD = None
         self.m_SchedType1 = None
         self.m_SchedType2 = None
-        self.m_Mag1 = None  # Note that only integer magnitudes are permitted for now.  The organism expects these as doubles!
-        self.m_Mag2 = None
         self.m_T1Lo = None  # These are the lo and Hi phenotypes for the 2 target classes.
         self.m_T1Hi = None
         self.m_T2Lo = None
         self.m_T2Hi = None
-        self.m_SchedValues1 = None  # Note that only integer schedule values are permitted for now.  The schedule objects expect these as doubles!
-        self.m_SchedValues2 = None
         self.m_EqualPunishmentRI = None
         self.m_SinglePunishmentRI = None
         self.m_PunishmentMag = None  # 0 to 1
         self.m_MutFuncParam = None
         self.m_ProportionPunishment = None
+
+        self.m_SchedValues1 = []
+        self.m_SchedValues2 = []
+        self.m_Mags1 = []
+        self.m_Mags2 = []
 
     def get_sched_values_1(self):
         return self.m_SchedValues1
@@ -39,11 +40,20 @@ class ExperimentParameters(object):
     def get_sched_values_2(self):
         return self.m_SchedValues2
 
+    def get_sched_value_1(self, schedule_index):
+        return self.m_SchedValues1[schedule_index]
+
+    def get_sched_value_2(self, schedule_index):
+        return self.m_SchedValues2[schedule_index]
+
     def set_sched_values_1(self, array_values):
         self.m_SchedValues1 = array_values
 
     def set_sched_values_2(self, array_values):
         self.m_SchedValues2 = array_values
+
+    def set_sched_value_1(self, schedule_index, value):
+        self.m
 
     def get_sd(self):
         return self.m_SD
@@ -54,10 +64,10 @@ class ExperimentParameters(object):
     def get_sched_type_2(self):
         return self.m_SchedType2
 
-    def get_mag_1(self):
-        return self.m_Mag1
+    def get_mag_1(self, schedule_index):
+        return self.m_Mags1[schedule_index]
 
-    def get_mag_2(self):
+    def get_mag_2(self, schedule_index):
         return self.m_Mag2
 
     def get_t_1_lo(self):

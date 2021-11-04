@@ -7,10 +7,10 @@ Created on Mar 22, 2021
 '''
 
 from timeit import default_timer as timer
+import numpy
 import winsound
 
 from sklearn.linear_model import LinearRegression
-import numpy
 
 from nets import _constants
 from nets._environment import Environment

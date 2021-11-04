@@ -30,7 +30,7 @@ class frmBuildOrganism(object):
         self.m_blnExists = None  # Added 10/2017 for error handling
 
     def exists(self):
-        self.m_blnExists
+        return self.m_blnExists
 
     def set_exists(self, value):
         self.m_blnExists = value

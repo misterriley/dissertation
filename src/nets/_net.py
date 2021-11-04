@@ -5,7 +5,6 @@ Created on Mar 22, 2021
 '''
 
 from timeit import default_timer as timer
-
 import numpy
 
 from nets import _constants
