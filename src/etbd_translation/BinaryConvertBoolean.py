@@ -9,10 +9,12 @@ Translated May 23, 2021
 class BinaryConvertBoolean(object):
 
 	@staticmethod
-	def convert_from_base_10(intToConvert):
-		# 'Accpet decimal integer, return binary number as Boolean array
+	def convert_from_base_10(intToConvert, num_bits):
+		# 'Accept decimal integer, return binary number as Boolean array
 
-		blnBits = [None]
+		assert num_bits == 0 or 2 ** num_bits >= intToConvert
+
+		blnBits = []
 		# Dim numBits As Integer
 
 		while True:
@@ -21,18 +23,22 @@ class BinaryConvertBoolean(object):
 				break
 			else:
 				blnBits.append(bool(intToConvert % 2))
-				intToConvert = int(intToConvert / 2)
+				intToConvert >>= 1
 
-		to_reverse = blnBits[1:]
-		to_reverse.reverse()
+		if num_bits != 0 and len(blnBits) < num_bits:
+			blnBits = [False] * (num_bits - len(blnBits)) + blnBits
+
+		blnBits.reverse()
 
 		# 'Boolean array was built in backwards order so it must be reversed.
 		# '(Notice that the zeroth element in the array is not part of the bit sequence.)
 
-		return blnBits[0:1] + to_reverse
+		return [None] + blnBits
 
 	@staticmethod
 	def convert_to_base_10(blnBits):
+
+		assert len(blnBits) == 11
 
 		# Accept binary number as a Boolean array, return decimal integer.
 		# Assumes that the 0th element in the array is not used.

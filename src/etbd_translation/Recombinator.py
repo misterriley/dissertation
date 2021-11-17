@@ -22,7 +22,6 @@ class Recombinator(object):
         # This class receives a father and a mother behavior and returns a child
         # This version is GOLD (the Select Case statement in the constructor has been corrected).
 
-        self.m_stuRecombinationParameters = RecombinationInfo()
         self.m_objRandom = CRandomNumber()
         self.m_objSampler = SampleWoutReplace()
 
@@ -46,7 +45,7 @@ class Recombinator(object):
         # binary bits or Gray code bits.  The Recombinator does not care about this and cannot tell the
         # difference.
 
-        blnChild = [False] * (len(blnFather))  # For the child behavior
+        blnChild = [None] * len(blnFather)  # For the child behavior
         # Dim intFlip As Integer # For Bitwise recombination and for cloning.
         numCrossovers = self.m_stuRecombinationParameters.get_points()  # For Crossover recombination.
         # Dim intTemp As Integer #For Crossover recombination.

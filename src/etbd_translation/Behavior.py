@@ -15,14 +15,17 @@ class Behavior(object):
 	classdocs
 	'''
 
-	def __init__(self, value = None):
+	def __init__(self, value = None, num_bits = 0):
+
+		assert num_bits == 10 or not isinstance(value, int)
+
 		self.m_blnBinaryBits = None
 		self.m_blnGrayBits = None
 		self.m_fitness = None
 
 		if value is not None:
 			if isinstance(value, int):
-				self.set_integer_value(value)
+				self.set_integer_value(value, num_bits)
 			else:
 				self.set_binary_bits(value)
 
@@ -61,8 +64,8 @@ class Behavior(object):
 		# returns the integer value of the bit string represented by the Boolean array.
 		return BinaryConvertBoolean.convert_to_base_10(self.m_blnBinaryBits)
 
-	def set_integer_value(self, value):
-		self.set_binary_bits(BinaryConvertBoolean.convert_from_base_10(value))
+	def set_integer_value(self, value, num_bits):
+		self.set_binary_bits(BinaryConvertBoolean.convert_from_base_10(value, num_bits))
 
 	def get_binary_bit_string(self):
 		return self.pad_string(BaseConverter.convert_from_base_10(self.get_integer_value(), 2))

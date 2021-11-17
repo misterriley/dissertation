@@ -66,24 +66,24 @@ class JSONData(object):
 	_SCHEDULES = "schedules"
 
 	_DEFAULT_MUTATION_RATE = 10
-	_DEFAULT_MUTATION_METHOD = Constants.MUTATION_METHOD_BIT_FLIP_BY_INDIVIDUAL
-	_DEFAULT_RECOMBINATION_METHOD = Constants.RECOMBINATION_METHOD_BITWISE
-	_DEFAULT_MATCHMAKING_METHOD = Constants.MATCHMAKING_METHOD_SEARCH
-	_DEFAULT_CONTINUOUS_FUNCTION_FORM = Constants.CONTINUOUS_FUNCTION_FORM_LINEAR
-	_DEFAULT_SELECTION_METHOD = Constants.SELECTION_METHOD_CONTINUOUS
+	_DEFAULT_MUTATION_METHOD = "BITFLIP BY INDIVIDUAL"
+	_DEFAULT_RECOMBINATION_METHOD = "BITWISE"
+	_DEFAULT_MATCHMAKING_METHOD = "SEARCH"
+	_DEFAULT_CONTINUOUS_FUNCTION_FORM = "LINEAR"
+	_DEFAULT_SELECTION_METHOD = "CONTINUOUS"
 	_DEFAULT_BETA_1 = 1
 	_DEFAULT_BETA_0 = 1
 	_DEFAULT_ALPHA = 1
-	_DEFAULT_PUNISHMENT_METHOD = Constants.PUNISHMENT_METHOD_FORCED_MUTATION
-	_DEFAULT_FITNESS_LANDSCAPE = Constants.FITNESS_LANDSCAPE_CIRCULAR
-	_DEFAULT_FITNESS_METHOD = Constants.FITNESS_METHOD_INDIVIDUAL
+	_DEFAULT_PUNISHMENT_METHOD = "FORCED MUTATION"
+	_DEFAULT_FITNESS_LANDSCAPE = "CIRCULAR"
+	_DEFAULT_FITNESS_METHOD = "INDIVIDUAL"
 	_DEFAULT_PERCENT_TO_REPLACE_2 = 100
 	_DEFAULT_PERCENT_TO_REPLACE = 100
 	_DEFAULT_HIGH_PHENOTYPE = 1023
 	_DEFAULT_LOW_PHENOTYPE = 0
 	_DEFAULT_NUM_BEHAVIORS = 100
 	_DEFAULT_SD = Constants.SD_COLOR_RED
-	_DEFAULT_SCHED_TYPE = Constants.SCHED_TYPE_RI
+	_DEFAULT_SCHED_TYPE = "VI"
 	_DEFAULT_MAG = 40
 	_DEFAULT_T_1_LO = 471
 	_DEFAULT_T_1_HI = 511
@@ -320,94 +320,94 @@ class JSONData(object):
 	def convert_to_mutation_method(self, value):
 		if value == "BITFLIP BY INDIVIDUAL":
 			return Constants.MUTATION_METHOD_BIT_FLIP_BY_INDIVIDUAL
-		if value == "BITFLIP BY BIT":
+		elif value == "BITFLIP BY BIT":
 			return Constants.MUTATION_METHOD_BIT_FLIP_BY_BIT
-		if value == "GAUSSIAN":
+		elif value == "GAUSSIAN":
 			return Constants.MUTATION_METHOD_GAUSSIAN
-		if value == "RANDOM INDIVIDUAL":
+		elif value == "RANDOM INDIVIDUAL":
 			return Constants.MUTATION_METHOD_RANDOM_INDIVIDUAL
-
-		return value
+		else:
+			raise AssertionError()
 
 	def convert_to_recombination_method(self, value):
 		if value == "BITWISE":
 			return Constants.RECOMBINATION_METHOD_BITWISE
-		if value == "CLONE":
+		elif value == "CLONE":
 			return Constants.RECOMBINATION_METHOD_CLONE
-		if value == "CROSSOVER":
+		elif value == "CROSSOVER":
 			return Constants.RECOMBINATION_METHOD_CROSSOVER
-
-		return value
+		else:
+			raise AssertionError()
 
 	def convert_to_matchmaking_method(self, value):
 		if value == "MATING POOL":
 			return Constants.MATCHMAKING_METHOD_MATING_POOL
-		if value == "SEARCH":
+		elif value == "SEARCH":
 			return Constants.MATCHMAKING_METHOD_SEARCH
-
-		return value
+		else:
+			raise AssertionError()
 
 	def convert_to_continuous_function_form(self, value):
 		if value == "EXPONENTIAL":
 			return Constants.CONTINUOUS_FUNCTION_FORM_EXPONENTIAL
-		if value == "LINEAR":
+		elif value == "LINEAR":
 			return Constants.CONTINUOUS_FUNCTION_FORM_LINEAR
-		if value == "NA":
+		elif value == "NA":
 			return Constants.CONTINUOUS_FUNCTION_FORM_NOT_APPLICABLE
-		if value == "UNIFORM":
+		elif value == "UNIFORM":
 			return Constants.CONTINUOUS_FUNCTION_FORM_UNIFORM
-
-		return value
+		else:
+			raise AssertionError()
 
 	def convert_to_selection_method(self, value):
 		if value == "CONTINUOUS":
 			return Constants.SELECTION_METHOD_CONTINUOUS
-		if value == "TOURNAMENT":
+		elif value == "TOURNAMENT":
 			return Constants.SELECTION_METHOD_TOURNAMENT
-		if value == "TRUNCATION":
+		elif value == "TRUNCATION":
 			return Constants.SELECTION_METHOD_TRUNCATION
-
-		return value
+		else:
+			raise AssertionError()
 
 	def convert_to_punishment_method(self, value):
 		if value == "FORCED MUTATION":
 			return Constants.PUNISHMENT_METHOD_FORCED_MUTATION
-		if value == "REPEL FOLD":
+		elif value == "REPEL FOLD":
 			return Constants.PUNISHMENT_METHOD_REPEL_FOLD
-		if value == "REPEL WRAP":
+		elif value == "REPEL WRAP":
 			return Constants.PUNISHMENT_METHOD_REPEL_WRAP
-
-		return value
+		else:
+			raise AssertionError()
 
 	def convert_to_fitness_method(self, value):
 		if value == "MIDPOINT":
 			return Constants.FITNESS_METHOD_MIDPOINT
-		if value == "INDIVIDUAL":
+		elif value == "INDIVIDUAL":
 			return Constants.FITNESS_METHOD_INDIVIDUAL
-		if value == "ENTIRE_CLASS":
+		elif value == "ENTIRE_CLASS":
 			return Constants.FITNESS_METHOD_ENTIRE_CLASS
-
-		return value
+		else:
+			raise AssertionError()
 
 	def convert_to_fitness_landscape(self, value):
 		if value == "CIRCULAR":
 			return Constants.FITNESS_LANDSCAPE_CIRCULAR
-		if value == "FLAT":
+		elif value == "FLAT":
 			return Constants.FITNESS_LANDSCAPE_FLAT
-
-		return value
+		else:
+			raise AssertionError()
 
 	def convert_to_sched_type(self, value):
-		if value == "RI":
+		if value == "RI" or value == "VI":
 			return Constants.SCHED_TYPE_RI
-		if value == "RR":
+		elif value == "RR" or value == "VR":
 			return Constants.SCHED_TYPE_RR
-		if value == "PROB":
+		elif value == "PROB":
 			return Constants.SCHED_TYPE_PROB
-		if value == "EXT":
+		elif value == "EXT":
 			return Constants.SCHED_TYPE_EXT
-
-		return value
+		else:
+			raise AssertionError()
 
 	@staticmethod
 	def load_file(input_file = None, print_status = False):

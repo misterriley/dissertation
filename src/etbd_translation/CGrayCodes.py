@@ -15,6 +15,8 @@ class CGrayCodes(object):
 
 	@staticmethod
 	def binary_to_gray_booleans(blnBinaryBits):
+		assert len(blnBinaryBits) == 11
+
 		# 'Converts a binary number represented as a Boolean array to Gray code represented as a Boolean array.
 
 		blnGrayBits = [None] * len(blnBinaryBits)
@@ -27,6 +29,7 @@ class CGrayCodes(object):
 
 	@staticmethod
 	def gray_to_binary_booleans(blnGrayBits):
+		assert len(blnGrayBits) == 11
 		raise NotImplementedError
 
 	@staticmethod
@@ -35,6 +38,7 @@ class CGrayCodes(object):
 
 	@staticmethod
 	def gray_to_integer(blnGrayBits):
+		assert len(blnGrayBits) == 11
 		raise NotImplementedError
 
 

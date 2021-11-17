@@ -67,7 +67,7 @@ class Mutator(object):
 
     def set_high_phenotype(self, value):
         self.m_highPhenotype = value
-        self.m_bitsInHighPhenotype = len(BinaryConvertBoolean.convert_from_base_10(value)) - 1  # Used in bitflip mutation methods.
+        self.m_bitsInHighPhenotype = len(BinaryConvertBoolean.convert_from_base_10(value, 0)) - 1  # Used in bitflip mutation methods.
 
     def get_use_gray_codes(self):
         return self.m_blnUseGrayCodes
@@ -181,7 +181,7 @@ class Mutator(object):
             blnConvertedInteger = CGrayCodes.binary_to_gray_booleans(BinaryConvertBoolean.convert_from_base_10(intBehavior))
         else:
             # Convert to Boolean binary bits
-            blnConvertedInteger = BinaryConvertBoolean.convert_from_base_10(intBehavior)
+            blnConvertedInteger = BinaryConvertBoolean.convert_from_base_10(intBehavior, 0)
 
         # Pad Boolean if necessary
         bitsInConvertedInteger = len(blnConvertedInteger) - 1
