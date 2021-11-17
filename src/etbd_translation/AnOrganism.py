@@ -81,7 +81,7 @@ class AnOrganism:
 
     # double
     def set_selection(self, selectionParameter, value):
-        self.get_current_population().set_selection(selectionParameter, 0, value)
+        self.get_current_population().set_selection(selectionParameter, value)
 
     # double, double
     def set_selection_overload(self, paramReinforcer, paramPunisher, value):

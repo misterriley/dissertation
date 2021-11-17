@@ -174,7 +174,7 @@ class Mutator(object):
 
         # Dim blnConvertedInteger(), blnBehavior(self.m_bitsInHighPhenotype) As Boolean
         # Dim bitsInConvertedInteger
-        blnBehavior = [False] * self.m_bitsInHighPhenotype
+        blnBehavior = [None] + [False] * self.m_bitsInHighPhenotype
 
         if self.get_use_gray_codes():
             # Convert to Boolean Gray code bits
@@ -188,7 +188,7 @@ class Mutator(object):
         if bitsInConvertedInteger < self.m_bitsInHighPhenotype:
             # Copy the elements of blnConvertedInteger into the rightmost elements of blnBehavior
             for i in range(self.m_bitsInHighPhenotype - bitsInConvertedInteger + 1, self.m_bitsInHighPhenotype + 1):
-                blnBehavior[i] = blnConvertedInteger(i - (self.m_bitsInHighPhenotype - bitsInConvertedInteger))
+                blnBehavior[i] = blnConvertedInteger[i - (self.m_bitsInHighPhenotype - bitsInConvertedInteger)]
 
         else:
             # No padding is necessary.  Just copy blnConvertedInteger to blnBehavior

@@ -32,5 +32,16 @@ class BinaryConvertBoolean(object):
 		return blnBits[0:1] + to_reverse
 
 	@staticmethod
-	def convert_to_base_10(binToConvert):
-		raise NotImplementedError
+	def convert_to_base_10(blnBits):
+
+		# Accept binary number as a Boolean array, return decimal integer.
+		# Assumes that the 0th element in the array is not used.
+
+		power = len(blnBits) - 1
+		intOutput = 0
+
+		for i in range(1, len(blnBits)):
+			power -= 1
+			intOutput += (blnBits[i]) * (2 ** power)
+
+		return intOutput

@@ -71,7 +71,7 @@ class frmExperiment(object):
                 # This ensures that there will be no lingering punishment info after a "Clear" operation
                 self.m_structExpInfo[exp_index].set_equal_punishment_ri(0)
 
-            if json_data.prop_punish_is_enabled():
+            if json_data.prop_punish_is_enabled(exp_index):
                 self.m_structExpInfo[exp_index].set_proportion_punishment(json_data.get_proportion_punishment(exp_index))  # The reciprocal of this value (0 to 1) times the reinforcement RI value
                 #                                                                                              gives the punishment RI value.  Not any more (7/2018).
                 #                                                                                              Now it is the factor that when multiplied by the RI
@@ -81,7 +81,7 @@ class frmExperiment(object):
                 # I guess this ensures the same as in the previous If...Then block
                 self.m_structExpInfo[exp_index].set_proportion_punishment(0)
 
-            if json_data.punish_1_RI_is_enabled():
+            if json_data.punish_1_RI_is_enabled(exp_index):
                 self.m_structExpInfo[exp_index].set_single_punishment_ri(json_data.get_single_punishment_ri(exp_index))
                 self.m_structExpInfo[exp_index].set_mut_func_param(json_data.get_mut_func_param(exp_index))
             else:

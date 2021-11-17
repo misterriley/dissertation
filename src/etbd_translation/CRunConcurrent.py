@@ -64,7 +64,7 @@ class CRunConcurrent(object):
         #    raise AssertionError(CStr(self.json_data.get_sched_values_1()(i) & CStr(self.json_data.get_sched_values_2()(i))))
         # Next i
         # Examine the target ranges--these are correct.
-        # raise AssertionError(self.json_data.get_T1Lo() & "  " & self.json_data.get_T1Hi() & "  " & self.json_data.get_T2Lo() & "  " & self.json_data.get_T2Hi())
+        # raise AssertionError(self.json_data.get_t_1_lo() & "  " & self.json_data.get_t_1_hi() & "  " & self.json_data.get_t_2_lo() & "  " & self.json_data.get_t_2_hi())
         # Stop
 
     def get_organism(self):
@@ -127,30 +127,30 @@ class CRunConcurrent(object):
 
         # Initialize the equal punishment RIs if necessary
         if self.json_data.get_equal_punishment_RI(self.m_experiment_index) != 0:
-            self.m_objRIPunish1.set_mean(self.json_data.get_equal_punishment_RI())
-            self.m_objRIPunish2.set_mean(self.json_data.get_equal_punishment_RI())
+            self.m_objRIPunish1.set_mean(self.json_data.get_equal_punishment_RI(self.m_experiment_index))
+            self.m_objRIPunish2.set_mean(self.json_data.get_equal_punishment_RI(self.m_experiment_index))
 
         # Initialize the single punishment RI if necessary
-        if self.json_data.get_single_punishment_RI() != 0:
-            self.m_objRIPunish1.set_mean(self.json_data.get_single_punishment_RI())
+        if self.json_data.get_single_punishment_RI(self.m_experiment_index) != 0:
+            self.m_objRIPunish1.set_mean(self.json_data.get_single_punishment_RI(self.m_experiment_index))
 
         # Repetitions are controlled from this loop
-        for intRep in range(1, self.get_repetitions() + 1):
-            for intSched in range(1, self.get_num_schedules() + 1):
+        for intRep in range(self.get_repetitions()):
+            for intSched in range(self.get_num_schedules()):
                 #Set the schedules**********************************************************************************************************
-                if self.json_data.get_sched_type_1() == Constants.SCHED_TYPE_PROB and self.json_data.get_sched_type_2() == Constants.SCHED_TYPE_PROB:
+                if self.json_data.get_sched_type_1(self.m_experiment_index, intSched) == Constants.SCHED_TYPE_PROB and self.json_data.get_sched_type_2(self.m_experiment_index, intSched) == Constants.SCHED_TYPE_PROB:
                     # Running probabilistic schedules
-                    self.m_objPROB1.set_prob_of_emission(self.json_data.get_sched_values_1()[intSched])
-                    self.m_objPROB2.set_prob_of_emission(self.json_data.get_sched_values_2()[intSched])
+                    self.m_objPROB1.set_prob_of_emission(self.json_data.get_sched_value_1(self.m_experiment_index, intSched))
+                    self.m_objPROB2.set_prob_of_emission(self.json_data.get_sched_value_2(self.m_experiment_index, intSched))
                 else:
                     # Otherwise, running RI schedules or RI schedules with superimposed punishment
                     # for RI schedules and RI schedules with superimposed punishment
-                    self.m_objRI1.set_mean(self.json_data.get_sched_values_1()[intSched])  # Setting the mean initializes the schedules.
-                    self.m_objRI2.set_mean(self.json_data.get_sched_values_2()[intSched])
+                    self.m_objRI1.set_mean(self.json_data.get_sched_value_1(self.m_experiment_index, intSched))  # Setting the mean initializes the schedules.
+                    self.m_objRI2.set_mean(self.json_data.get_sched_value_2(self.m_experiment_index, intSched))
                     # Initialize proportional punishment RIs if necessary
-                    if self.json_data.get_proportion_punishment() != 0:
-                        self.m_objRIPunish1.set_mean((self.json_data.get_proportion_punishment()) * self.json_data.get_sched_values_1()[intSched])
-                        self.m_objRIPunish2.set_mean((self.json_data.get_proportion_punishment()) * self.json_data.get_sched_values_2()[intSched])
+                    if self.json_data.get_proportion_punishment(self.m_experiment_index, intSched) != 0:
+                        self.m_objRIPunish1.set_mean((self.json_data.get_proportion_punishment(self.m_experiment_index, intSched)) * self.json_data.get_sched_values_1(self.m_experiment_index, intSched))
+                        self.m_objRIPunish2.set_mean((self.json_data.get_proportion_punishment(self.m_experiment_index, intSched)) * self.json_data.get_sched_values_2(self.m_experiment_index, intSched))
 
                     # self.m_objRI1.SaveIRIs = True  Don#t do this!
                     # self.m_objRI2.SaveIRIs = True  No!
@@ -158,7 +158,7 @@ class CRunConcurrent(object):
                 self.get_organism().reset_population()  # This solves the problem of missing reinforcers! I don#t think the "Item" segment is necessary.
 
                 #Run the schedules*************************************************************************************************************
-                if self.json_data.get_sched_type_1() == Constants.SCHED_TYPE_PROB and self.json_data.get_sched_type_2() == Constants.SCHED_TYPE_PROB:
+                if self.json_data.get_sched_type_1(self.m_experiment_index, intSched) == Constants.SCHED_TYPE_PROB and self.json_data.get_sched_type_2(self.m_experiment_index, intSched) == Constants.SCHED_TYPE_PROB:
                     # Running probabilistic schedules
                     self.do_a_prob_sched(intRep, intSched)  #  <---Runs a schedule
                 else:
@@ -178,14 +178,16 @@ class CRunConcurrent(object):
         #                                          Actually, it is OK as is.  Does not execute the self.check_for_punishment method if no punishment is arranged.
         # Dim blnPunishmentDelivered As Boolean
         blnNoRMOnPunishment = False  # No recombination/mutation when only punishment is delivered
-        blnEqualPunishmentRI, blnSinglePunishmentRI, blnProportionalPunishment = False
+        blnEqualPunishmentRI = False
+        blnSinglePunishmentRI = False
+        blnProportionalPunishment = False
 
         # Set booleans for the punishment method, if necessary
-        if self.json_data.get_equal_punishment_RI() != 0:
+        if self.json_data.get_equal_punishment_RI(self.m_experiment_index, intSched) != 0:
             blnEqualPunishmentRI = True
-        elif self.json_data.get_proportion_punishment() > 0:
+        elif self.json_data.get_proportion_punishment(self.m_experiment_index, intSched) > 0:
             blnProportionalPunishment = True
-        elif self.json_data.get_single_punishment_RI() != 0:
+        elif self.json_data.get_single_punishment_RI(self.m_experiment_index, intSched) != 0:
             blnSinglePunishmentRI = True
 
         # raise AssertionError(blnEqualPunishmentRI & "     " & blnProportionalPunishment & "     " & blnSinglePunishmentRI)
@@ -213,15 +215,15 @@ class CRunConcurrent(object):
             # Extinction appears to be working just fine.  Hence all of the problem has to be right here.*****************************************<<<<<<
 
             # Advance interval timers for reinforcement
-            self.m_objRI1.TickTock()
-            self.m_objRI2.TickTock()
+            self.m_objRI1.tick_tock()
+            self.m_objRI2.tick_tock()
             # Advance interval timers for punishment, if necessary
             if blnEqualPunishmentRI or blnProportionalPunishment:
                 # Equal or proportional punishment is being run.
-                self.m_objRIPunish1.TickTock()
-                self.m_objRIPunish2.TickTock()
+                self.m_objRIPunish1.tick_tock()
+                self.m_objRIPunish2.tick_tock()
             elif blnSinglePunishmentRI:
-                self.m_objRIPunish1.TickTock()
+                self.m_objRIPunish1.tick_tock()
 
             blnPunishmentDelivered = False  # Initialize this for each generation just to be safe.
             #                                This is used when there is no extra recombination and mutation (i.e., a non-selection event) following punishment
@@ -250,7 +252,7 @@ class CRunConcurrent(object):
                         blnPunishmentDelivered = False
 
                 # Then check for reinforcement and inform the organism of the result
-                if self.check_for_reinforcement(intEmittedPhenoClass, blnNoRMOnPunishment, blnPunishmentDelivered) == True:
+                if self.check_for_reinforcement(intEmittedPhenoClass, blnNoRMOnPunishment, blnPunishmentDelivered, intSched) == True:
                     # Update the value aggregator
                     intValAgg[intEmittedPhenoClass] += 1
                     # Update the reinforcement array
@@ -312,14 +314,14 @@ class CRunConcurrent(object):
 
             # #Extinction appears to be working just fine.  Hence all of the problem has to be right here.*****************************************<<<<<<
             # #Advance interval timers
-            # self.m_objRI1.TickTock()
-            # self.m_objRI2.TickTock()
+            # self.m_objRI1.tick_tock()
+            # self.m_objRI2.tick_tock()
             # if self.json_data.get_equal_punishment_RI() != 0 or self.json_data.get_proportion_punishment() != 0:
             #    #raise AssertionError("Punishment RI running...")
             #    #Stop
             #    #Equal or proportional punishment is being run.
-            #    self.m_objRIPunish1.TickTock()
-            #    self.m_objRIPunish2.TickTock()
+            #    self.m_objRIPunish1.tick_tock()
+            #    self.m_objRIPunish2.tick_tock()
             #
 
             # blnPunishmentDelivered = False # Initialize this for each generation just to be safe.
@@ -388,9 +390,9 @@ class CRunConcurrent(object):
 
     def check_for_targets(self, intEmittedPheno):
 
-        if intEmittedPheno >= self.json_data.get_T1Lo() and intEmittedPheno <= self.json_data.get_T1Hi():
+        if intEmittedPheno >= self.json_data.get_t_1_lo(self.m_experiment_index) and intEmittedPheno <= self.json_data.get_t_1_hi(self.m_experiment_index):
             return 1
-        elif intEmittedPheno >= self.json_data.get_T2Lo() and intEmittedPheno <= self.json_data.get_T2Hi():
+        elif intEmittedPheno >= self.json_data.get_t_2_lo(self.m_experiment_index) and intEmittedPheno <= self.json_data.get_t_2_hi(self.m_experiment_index):
             return 2
         else:
             return 0
@@ -417,7 +419,7 @@ class CRunConcurrent(object):
                 # Target 1 was emitted
                 if self.m_objRIPunish1.is_reinforcement_set_up():
                     #v Hard coded for differential punishment for now*******************************************************************
-                    self.get_organism().forced_mut_punish(dblPunishProb, self.json_data.get_mut_func_param(), self.json_data.get_T1Lo(), self.json_data.get_T2Lo(), self.json_data.get_T1Hi(), self.json_data.get_T2Hi())
+                    self.get_organism().forced_mut_punish(dblPunishProb, self.json_data.get_mut_func_param(), self.json_data.get_t_1_lo(), self.json_data.get_t_2_lo(), self.json_data.get_t_1_hi(), self.json_data.get_t_2_hi())
                     return True
                 else:
                     # No punishment
@@ -439,7 +441,7 @@ class CRunConcurrent(object):
                     return True
                 else:
                     # Forced mutation punishment
-                    self.get_organism().forced_mut_punish(dblPunishProb, self.json_data.get_mut_func_param(), self.json_data.get_T1Lo(), self.json_data.get_T2Lo(), self.json_data.get_T1Hi(), self.json_data.get_T2Hi())
+                    self.get_organism().forced_mut_punish(dblPunishProb, self.json_data.get_mut_func_param(), self.json_data.get_t_1_lo(), self.json_data.get_t_2_lo(), self.json_data.get_t_1_hi(), self.json_data.get_t_2_hi())
                     return True
 
             else:
@@ -457,7 +459,7 @@ class CRunConcurrent(object):
                     return True
                 else:
                     # Forced mutation punishment
-                    self.get_organism().forced_mut_punish(1 - dblPunishProb, self.json_data.get_mut_func_param(), self.json_data.get_T1Lo(), self.json_data.get_T2Lo(), self.json_data.get_T1Hi(), self.json_data.get_T2Hi())
+                    self.get_organism().forced_mut_punish(1 - dblPunishProb, self.json_data.get_mut_func_param(), self.json_data.get_t_1_lo(), self.json_data.get_t_2_lo(), self.json_data.get_t_1_hi(), self.json_data.get_t_2_hi())
                     return True
 
             else:
@@ -468,13 +470,13 @@ class CRunConcurrent(object):
             # Neither target was emitted
             return False
 
-    def check_for_reinforcement(self, intEmittedPhenoClass, blnNoRMOnPunishment, blnPunishmentDelivered):
+    def check_for_reinforcement(self, intEmittedPhenoClass, blnNoRMOnPunishment, blnPunishmentDelivered, intSched):
 
         if intEmittedPhenoClass == 1:
             # Target 1 was emitted
             if self.m_objRI1.is_reinforcement_set_up() == True:
                 # Reinforcement is delivered on alterantive 1
-                self.get_organism().set_selection(self.json_data.get_mag_1(), True)  # Informs organism that reinforcement occurred
+                self.get_organism().set_selection(self.json_data.get_mag_1(self.m_experiment_index, intSched), True)  # Informs organism that reinforcement occurred
                 return True
             else:
                 # No reinforcement
@@ -484,7 +486,7 @@ class CRunConcurrent(object):
                     # Don#t do nuthin#
                     # raise AssertionError("Ain#t doin# nuthin# on target 1")
                 else:
-                    self.get_organism().set_selection(self.json_data.get_mag_1(), False)
+                    self.get_organism().set_selection(self.json_data.get_mag_1(self.m_experiment_index, intSched), False)
 
                 # if Not blnPunishmentDelivered: self.get_organism().Selection(self.json_data.get_mag_1()) = False
                 return False
@@ -493,7 +495,7 @@ class CRunConcurrent(object):
             # Target 2 was emitted
             if self.m_objRI2.is_reinforcement_set_up() == True:
                 # Reinforcement is delivered on alternative 2
-                self.get_organism().set_selection(self.json_data.get_mag_2(), True)  # Informs organism that reinforcement occurred.
+                self.get_organism().set_selection(self.json_data.get_mag_2(self.m_experiment_index, intSched), True)  # Informs organism that reinforcement occurred.
                 return True
             else:
                 # No reinforcement
@@ -503,7 +505,7 @@ class CRunConcurrent(object):
                     # Don#t do nuthin#
                     # raise AssertionError("Ain#t doin# nuthin# on target 2")
                 else:
-                    self.get_organism().set_selection(self.json_data.get_mag_2(), False)
+                    self.get_organism().set_selection(self.json_data.get_mag_2(self.m_experiment_index, intSched), False)
 
                 return False
 
@@ -517,7 +519,7 @@ class CRunConcurrent(object):
                 # Don#t do nuthin#
                 # raise AssertionError("Ain#t doin# nuthin# on target 0")
             else:
-                self.get_organism().set_selection(self.json_data.get_mag_1(), False)  # I don#t think it matters what Mag is passed when this is false.  The parameter is ignored.
+                self.get_organism().set_selection(self.json_data.get_mag_1(self.m_experiment_index, intSched), False)  # I don#t think it matters what Mag is passed when this is false.  The parameter is ignored.
                 # raise AssertionError(blnNoRMOnPunishment.ToString &" " & blnPunishmentDelivered.ToString & "  Uh oh on target 0")
 
             return False

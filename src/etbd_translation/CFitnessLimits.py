@@ -36,7 +36,8 @@ class CFitnessLimits(object):
 
         # selectionParameter will be positive for reinforcement, negative for punishment
 
-        intToLow, intToHigh = None
+        intToLow = None
+        intToHigh = None
 
         if selectionParameter > 0:
             # Reinforforcement.

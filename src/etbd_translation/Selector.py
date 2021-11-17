@@ -67,11 +67,11 @@ class Selector(object):
             # self.set_continuous_mean(-value)
             #--------------------------------------------------------------------------------------------
             self.set_continuous_mean(value)
-        if self.get_selection_method() == Constants.SELECTION_METHOD_TOURNAMENT:
+        elif self.get_selection_method() == Constants.SELECTION_METHOD_TOURNAMENT:
             # self.set_truncation_proportion(0)
             self.set_tournament_competitors(int(value))
             # self.set_continuous_mean(0)
-        if self.get_selection_method() == Constants.SELECTION_METHOD_TRUNCATION:
+        elif self.get_selection_method() == Constants.SELECTION_METHOD_TRUNCATION:
             self.set_truncation_proportion(value)
             # self.set_tournament_competitors(0)
             # self.set_continuous_mean(0)
@@ -111,7 +111,7 @@ class Selector(object):
     def get_continuous_mean(self):
         return self.m_continuousMean
 
-    def set_(self, value):
+    def set_continuous_mean(self, value):
         self.m_continuousMean = value
 
     def get_selection_method(self):
@@ -185,7 +185,7 @@ class Selector(object):
         #-----for more info.
 
         # Dim targetFitness, indexToReturn, itemCounter, timesThroughLoop, objBehavior As Behavior
-        # Dim gotOne As Boolean #Tells whether a behavior with the target fitness was found.
+        gotOne = False  # Tells whether a behavior with the target fitness was found.
         objSampler = SampleWoutReplace()
         # Dim blnInRange As Boolean # Tells whether a draw fitness value falls within the range of fitnesses that exist in the population
 

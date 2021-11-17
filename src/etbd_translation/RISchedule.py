@@ -26,7 +26,7 @@ class RISchedule(object):
     '''
 
     def __init__(self, dblMean = 0):
-        self.m_Mean = dblMean
+        self.m_mean = dblMean
         self.m_dblCurrentInterval = 0
         self.m_intTicksIntoInterval = 0  # Time (ticks) since the last reinforcement.
         self.m_blnSaveIRIs = False
@@ -34,10 +34,10 @@ class RISchedule(object):
         self.m_objRandom = CRandomNumber()
 
     def get_mean(self):
-        return self.m_Mean
+        return self.m_mean
 
     def set_mean(self, value):
-        self.m_Mean = value
+        self.m_mean = value
         self.m_objRandom.set_mean(self.m_mean)
         self.get_new_interval()
         self.m_intTicksIntoInterval = 0

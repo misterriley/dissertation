@@ -69,4 +69,4 @@ class CRandomNumber(object):
 		return self.m_mean + self.get_gaussian_deviate() * self.m_sd
 
 	def get_exponential_double(self):
-		return -self.m_mean * numpy.log(1 - self.get_rectangular_decimal())
+		return -1 * self.m_mean * numpy.log(1 - self.get_rectangular_decimal())

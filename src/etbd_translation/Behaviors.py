@@ -58,7 +58,7 @@ class Behaviors(object):
         self.m_objRandom = CRandomNumber()  # Defaults to the Mersenne Twister algorithm
         self.m_objCoinToss = CRandomNumber()  # Defaults to the Mersenne Twister algorithm.  Added for punishment coin tossing so as not to screw up
         #                                          the setting and resetting of self.m_objRandom.  Highest and Lowest integers set in the constructor.
-        self.m_objSampler = None  # To sample without replacement
+        self.m_objSampler = SampleWoutReplace()  # To sample without replacement
         self.m_objFitnessLimits = None
 
         # To force cloning when punishment leaves 0 or 1 fit behaviors
@@ -133,7 +133,7 @@ class Behaviors(object):
             self.m_objRepulsionPunishment = CRepulsionPunishment(self.get_low_phenotype(), self.get_high_phenotype(), self.m_bitsInHighPhenotype, self.m_dblKelleyN)
 
         # Fill the population with random behaviors
-        self.population_with_random_behaviors()
+        self.populate_with_random_behaviors()
 
         # Instantiate the PopulationSaver object
         if self.get_viscosity_ticks() > 0:
@@ -305,7 +305,7 @@ class Behaviors(object):
         self.m_indexOfEmittedBehavior = value
 
     def set_selection(self, selectionParameter, value):
-        self.set_selection_overload2(selectionParameter, 0, value)
+        self.set_selection_overload_2(selectionParameter, 0, value)
 
     def set_selection_overload(self, paramReinforcer, paramPunisher, value):
 
@@ -1158,8 +1158,8 @@ class Behaviors(object):
         # 3.  Add child to lstNewChldBehaivors
         # 4.  Transfer lstNewChildBehaviors to self.m_behavior_list
 
-        intNumToReplace = self.get_percent_to_replace() / 100 * self.get_num_behaviors()  # When selection occurs
-        intNumToReplace2 = self.get_percent_to_replace2() / 100 * self.get_num_behaviors()  # When selection does not occur (added 1/2018)
+        intNumToReplace = int(self.get_percent_to_replace() / 100 * self.get_num_behaviors())  # When selection occurs
+        intNumToReplace2 = int(self.get_percent_to_replace_2() / 100 * self.get_num_behaviors())  # When selection does not occur (added 1/2018)
         lstNewChildBehaviors = list()  # This will contain the new child behaviors
 
         if blnSelection and self.m_blnForceClone:
@@ -1316,7 +1316,7 @@ class Behaviors(object):
 
         else:
             # Selection did not occur, use self.get_percent_to_replace2() (added 1/2018)
-            if self.get_percent_to_replace2() == 100:
+            if self.get_percent_to_replace_2() == 100:
                 # Transfer all behaviors in lstNewChildBehaviors to self.m_behavior_list
                 # This transfer has been tested thoroughly with cloning and works _perfectly_.
                 self.m_behavior_list.clear()
@@ -1454,7 +1454,7 @@ class Behaviors(object):
 
         # Called by CreateNewGenration.  Returns a child behavior in binary bits.
 
-        if self.use_gray_codes():
+        if self.get_use_gray_codes():
             # Gray code bits
             blnChild = self.m_objRecombinator.get_child(self.get_behavior(intIndexFather).get_gray_bits(), self.get_behavior(intIndexMother).get_gray_bits())
             #-----Convert to binary bits
@@ -1604,7 +1604,7 @@ class Behaviors(object):
 
 # Region " Collection utilities"
 
-    def population_with_random_behaviors(self):
+    def populate_with_random_behaviors(self):
         # Fills this population with self.get_num_behaviors() from self.get_low_phenotype() to self.get_high_phenotype().
 
         self.m_behavior_list.clear()
@@ -1640,7 +1640,7 @@ class Behaviors(object):
         self.m_blnSelection = False  # Default value upon class instantiation.
         self.m_objRW.clear_associative_strengths()
 
-    def reset_populations(self):
+    def reset_population(self):
         # This procedure is called to start over after FitParentException is thrown.
         self.populate_with_random_behaviors()
         self.set_ready_to_emit(True)

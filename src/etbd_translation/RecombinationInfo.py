@@ -11,9 +11,9 @@ class RecombinationInfo(object):
     classdocs
     '''
 
-    def init(self):
-        self.m_method
-        self.m_points
+    def __init__(self):
+        self.m_method = None
+        self.m_points = 0
 
     def get_method(self):
         return self.m_method

@@ -49,7 +49,7 @@ class SampleWoutReplace(object):
 
     def OK(self, intSampledInteger):
 
-        # Dim blnPresentInList As Boolean
+        blnPresentInList = False
 
         # Check m_intList for presence of intSampledInteger
         for intNumber in self.m_intList:

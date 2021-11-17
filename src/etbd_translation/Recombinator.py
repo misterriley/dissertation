@@ -6,6 +6,7 @@ Translated May 24, 2021
 '''
 from etbd_translation import Constants
 from etbd_translation.CRandomNumber import CRandomNumber
+from etbd_translation.RecombinationInfo import RecombinationInfo
 from etbd_translation.SampleWoutReplace import SampleWoutReplace
 
 
@@ -21,7 +22,7 @@ class Recombinator(object):
         # This class receives a father and a mother behavior and returns a child
         # This version is GOLD (the Select Case statement in the constructor has been corrected).
 
-        self.m_stuRecombinationParameters = None
+        self.m_stuRecombinationParameters = RecombinationInfo()
         self.m_objRandom = CRandomNumber()
         self.m_objSampler = SampleWoutReplace()
 
