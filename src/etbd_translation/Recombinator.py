@@ -6,7 +6,6 @@ Translated May 24, 2021
 '''
 from etbd_translation import Constants
 from etbd_translation.CRandomNumber import CRandomNumber
-from etbd_translation.RecombinationInfo import RecombinationInfo
 from etbd_translation.SampleWoutReplace import SampleWoutReplace
 
 
