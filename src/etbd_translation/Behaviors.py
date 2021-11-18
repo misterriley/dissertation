@@ -5,11 +5,9 @@ Translated May 23, 2021
 @author: bleem
 '''
 
-from etbd_translation import Constants
+from etbd_translation import Constants, Converter, BinaryConvertBoolean, CGrayCodes
 from etbd_translation.Behavior import Behavior
-from etbd_translation.BinaryConvertBoolean import BinaryConvertBoolean
 from etbd_translation.CFitnessLimits import CFitnessLimits
-from etbd_translation.CGrayCodes import CGrayCodes
 from etbd_translation.CRandomNumber import CRandomNumber
 from etbd_translation.CRepulsionPunishment import CRepulsionPunishment
 from etbd_translation.CRescorlaWagner import CRescorlaWagner
@@ -157,6 +155,9 @@ class Behaviors(object):
 	def get_sdid(self):
 		return self.m_SDID
 
+	def get_sd_str(self):
+		return Converter.convert_to_sd_color(self.m_SDID)
+
 	def set_sdid(self, value):
 		self.m_SDID = value
 
@@ -233,17 +234,26 @@ class Behaviors(object):
 	def get_fitness_method(self):
 		return self.m_fitnessMethod
 
+	def get_fitness_method_str(self):
+		return Converter.convert_fitness_method_to_string(self.m_fitnessMethod)
+
 	def set_fitness_method(self, value):
 		self.m_fitnessMethod = value
 
 	def get_fitness_landscape(self):
 		return self.m_fitnessLandscape
 
+	def get_fitness_landscape_str(self):
+		return Converter.convert_fitness_landscape_to_string(self.m_fitnessLandscape)
+
 	def set_fitness_landscape(self, value):
 		self.m_fitnessLandscape = value
 
 	def get_punishment_method(self):
 		return self.m_punishmentMethod
+
+	def get_punishment_method_str(self):
+		return Converter.convert_punishment_method_to_string(self.m_punishmentMethod)
 
 	def set_punishment_method(self, value):
 		self.m_punishmentMethod = value

@@ -5,47 +5,37 @@ Translated May 23, 2021
 @author: bleem
 '''
 
-from etbd_translation.BinaryConvertBoolean import BinaryConvertBoolean
+from etbd_translation import BinaryConvertBoolean
 
 
-class CGrayCodes(object):
-	'''
-	classdocs
-	'''
+def binary_to_gray_booleans(blnBinaryBits):
+	# 'Converts a binary number represented as a Boolean array to Gray code represented as a Boolean array.
 
-	@staticmethod
-	def binary_to_gray_booleans(blnBinaryBits):
-		assert len(blnBinaryBits) == 11
+	blnGrayBits = [None] * len(blnBinaryBits)
 
-		# 'Converts a binary number represented as a Boolean array to Gray code represented as a Boolean array.
+	blnGrayBits[1] = blnBinaryBits[1]
+	for i in range(2, len(blnBinaryBits)):
+		blnGrayBits[i] = blnBinaryBits[i] ^ blnBinaryBits[i - 1]
 
-		blnGrayBits = [None] * len(blnBinaryBits)
+	return blnGrayBits
 
-		blnGrayBits[1] = blnBinaryBits[1]
-		for i in range(2, len(blnBinaryBits)):
-			blnGrayBits[i] = blnBinaryBits[i] ^ blnBinaryBits[i - 1]
 
-		return blnGrayBits
+def gray_to_binary_booleans(blnGrayBits):
+	raise NotImplementedError
 
-	@staticmethod
-	def gray_to_binary_booleans(blnGrayBits):
-		assert len(blnGrayBits) == 11
-		raise NotImplementedError
 
-	@staticmethod
-	def integer_to_gray(intToConvert):
-		raise NotImplementedError
+def integer_to_gray(intToConvert):
+	raise NotImplementedError
 
-	@staticmethod
-	def gray_to_integer(blnGrayBits):
-		assert len(blnGrayBits) == 11
-		raise NotImplementedError
+
+def gray_to_integer(blnGrayBits):
+	raise NotImplementedError
 
 
 if __name__ == '__main__':
 	for i in range(10):
 		blnBits = BinaryConvertBoolean.convert_from_base_10(i)
-		grayBits = CGrayCodes.binary_to_gray_booleans(blnBits)
+		grayBits = binary_to_gray_booleans(blnBits)
 
 		print(blnBits)
 		print(grayBits)

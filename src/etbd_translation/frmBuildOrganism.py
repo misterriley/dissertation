@@ -123,7 +123,7 @@ class frmBuildOrganism(object):
 
         #Read form--------------------------------------------------
         # Get discriminative stimulus
-        stuBehaviorsInfo.set_sdid(json_data.get_sd())
+        stuBehaviorsInfo.set_sdid(json_data.get_sdid())
         if stuBehaviorsInfo.get_sdid() == -1:
             return  #  This SD as already been used.
 

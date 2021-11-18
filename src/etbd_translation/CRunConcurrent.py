@@ -7,7 +7,9 @@ import numpy
 
 from etbd_translation import Constants
 from etbd_translation.CProbEmitter import CProbEmitter
+from etbd_translation.CWriteData import CWriteData
 from etbd_translation.RISchedule import RISchedule
+
 
 PRINT_EVERY_N_GENS = 100
 
@@ -17,14 +19,14 @@ class CRunConcurrent(object):
 	classdocs
 	'''
 
-	def __init__(self, myOrganism, json_data, experiment_index):
+	def __init__(self, myOrganism, json_data, experiment_index, experiment_parameters):
 		'''
 		Constructor
 		'''
 
 		#This runs a concurrent RI RI schedule only for now****************************************************************************************************
 		self.m_myOrganism = None
-		self.m_structExpInfo = None
+		self.m_structExpInfo = experiment_parameters
 		self.m_intRepetitions = None
 		self.m_intGenerations = None
 		self.m_intSchedules = None
@@ -105,6 +107,8 @@ class CRunConcurrent(object):
 
 		# Runs, RI schedules, RI schedules with superimposed punishment, and probabilistic schedules
 
+		objFileWriter = CWriteData(self.get_organism().get_behaviors_info(), self.get_experiment_info(), self.m_strOutpath, self.m_strFileStub, self.get_repetitions(), self.get_generations())
+
 		# Dim intRep, intSched As Integer
 
 		# Turn on a discriminative stimulus
@@ -171,6 +175,23 @@ class CRunConcurrent(object):
 				print("\tfinishing sched " + str(intSched))
 			print("finishing rep " + str(intRep))
 		# At this point the phenotye and reinforcement and, if applicable, punishment arrays for all repetitions and schedules are loaded.
+
+		# Clear info from form prior to write
+		# myExperiment.txtRepetition.Text = ""
+		# myExperiment.txtSchedule.Text = ""
+
+		# Write data to .csv file and summary to Excel
+		print("Writing .csv file...")
+		# Application.DoEvents()
+		objFileWriter.write_csv(self.m_blnPhenoReinforced, self.m_blnPhenoPunished, self.m_intEmittedPheno)
+
+		print("Writing Excel file...")
+		objFileWriter.write_excel(self.m_blnPhenoReinforced, self.m_blnPhenoPunished, self.m_intEmittedPheno)
+
+		# My.Computer.Audio.Play(My.Resources._22Fillywhinnygrunt2000, AudioPlayMode.Background)
+		# print("Done giddyuped!")
+		# MsgBox("Last phenotype = " & CStr(intEmittedPheno(Schedules, Repetitions, Generations)))
+		# 22Fillywhinnygrunt2000  My.Computer.Audio.Play(My.Resources.alonebad, AudioPlayMode.Background)
 
 	def do_a_sched(self, intRep, intSched):
 

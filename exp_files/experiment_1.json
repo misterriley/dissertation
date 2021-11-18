@@ -5,10 +5,10 @@
 	"target_class_2_max":552,
 	"schedule_1_type":"VI",
 	"schedule_2_type":"VI",
-	"run_duration": 20000,
+	"run_duration": 500,
 	"run_repetitions":1, 
 	"net_type":3,
-	"burn_in":500,
+	"burn_in":10,
 	"mutation_rate":10,
 	"experiments":
 	[

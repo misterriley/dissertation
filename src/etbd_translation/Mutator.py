@@ -5,9 +5,7 @@ Translated May 23, 2021
 @author: bleem
 '''
 
-from etbd_translation import Constants
-from etbd_translation.BinaryConvertBoolean import BinaryConvertBoolean
-from etbd_translation.CGrayCodes import CGrayCodes
+from etbd_translation import Constants, BinaryConvertBoolean, CGrayCodes
 from etbd_translation.CProbEmitter import CProbEmitter
 from etbd_translation.CRandomNumber import CRandomNumber
 

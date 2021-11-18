@@ -5,9 +5,7 @@ Translated May 23, 2021
 @author: bleem
 '''
 
-from etbd_translation.BaseConverter import BaseConverter
-from etbd_translation.BinaryConvertBoolean import BinaryConvertBoolean
-from etbd_translation.CGrayCodes import CGrayCodes
+from etbd_translation import BaseConverter, BinaryConvertBoolean, CGrayCodes
 
 
 class Behavior(object):

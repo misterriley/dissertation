@@ -9,6 +9,7 @@ from playsound import playsound
 from etbd_translation.CRunConcurrent import CRunConcurrent
 from etbd_translation.ExperimentParameters import ExperimentParameters
 
+
 GREEN = "Green"
 
 
@@ -149,11 +150,10 @@ class frmExperiment(object):
 		for i in range(0, self.m_intExpNum):
 			print("starting experiment " + str(i))
 			# Run the experiment and write the data.
-			objRunExperiment = CRunConcurrent(self.m_frmOrganism.get_creature(), json_data, i)
+			objRunExperiment = CRunConcurrent(self.m_frmOrganism.get_creature(), json_data, i, self.m_structExpInfo[i])
 			objRunExperiment.giddyup()
 			print("finishing experiment " + str(i))
 
 		playsound("./22Fillywhinnygrunt2000.wav")  # as Jack would have wanted
-
 		print("Done giddyuped!")
 
