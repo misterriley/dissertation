@@ -4,13 +4,7 @@ Created on May 24, 2021
 @author: bleem
 '''
 
-from builtins import staticmethod
-import json
-
-import easygui
-
 from etbd_translation import Constants, Converter
-
 
 _EXPERIMENTS = "experiments"
 _STAR_JSON = "*.json"
@@ -331,16 +325,3 @@ class JSONData(object):
 	def get_mutation_rate(self):
 		return self.get(_MUTATION_RATE, _DEFAULT_MUTATION_RATE)
 
-	@staticmethod
-	def load_file(input_file = None, print_status = False):
-		if input_file is None:
-			input_file = easygui.fileopenbox(default = "../../exp_files/*.json")
-
-		if input_file is None:
-			return None
-
-		with open(input_file,) as exp_file:
-			if print_status:
-				print("reading from " + input_file)
-			data = json.load(exp_file)
-			return JSONData(data)
