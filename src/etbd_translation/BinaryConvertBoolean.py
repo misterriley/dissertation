@@ -6,9 +6,9 @@ Translated May 23, 2021
 '''
 
 
-def convert_from_base_10(intToConvert, num_bits):
+def convert_from_base_10(value, num_bits):
 	# 'Accept decimal integer, return binary number as Boolean array
-
+	intToConvert = value
 	assert num_bits == 0 or 2 ** num_bits >= intToConvert
 
 	blnBits = []
@@ -23,14 +23,17 @@ def convert_from_base_10(intToConvert, num_bits):
 			intToConvert >>= 1
 
 	if num_bits != 0 and len(blnBits) < num_bits:
-		blnBits = [False] * (num_bits - len(blnBits)) + blnBits
+		blnBits = blnBits + [False] * (num_bits - len(blnBits))
 
 	blnBits.reverse()
 
 	# 'Boolean array was built in backwards order so it must be reversed.
 	# '(Notice that the zeroth element in the array is not part of the bit sequence.)
 
-	return [None] + blnBits
+	ret = [None] + blnBits
+	# test = convert_to_base_10(ret)
+	# assert test == value
+	return ret
 
 
 def convert_to_base_10(blnBits):

@@ -10,7 +10,6 @@ from etbd_translation.CProbEmitter import CProbEmitter
 from etbd_translation.CWriteData import CWriteData
 from etbd_translation.RISchedule import RISchedule
 
-
 PRINT_EVERY_N_GENS = 100
 
 
@@ -231,6 +230,9 @@ class CRunConcurrent(object):
 		dblA = self.m_myOrganism.get_behaviors_info().get_fomo_a()  # for manipulating the reinforcement loss aversion.  0.76 should decrease it.
 
 		for intGen in range(self.get_generations()):
+
+			# self.get_organism().sanity_check()  # For debug purposes
+
 			if intGen % PRINT_EVERY_N_GENS == 0:
 				print("\t\tgen " + str(intGen))
 			# Get a behavior

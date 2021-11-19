@@ -19,6 +19,14 @@ class AnOrganism:
 		self.m_currentSDColor = Constants.SD_COLOR_NULL
 		self.m_behaviors_list = list()
 
+	def sanity_check(self):
+		count = 0
+		for b in self.m_behaviors_list[0].m_behavior_list:
+			bools = b.get_binary_bits()
+			count += bools[1]  # something fishy is going on with the first bit of the binary strings
+
+		print(count)
+
 	def get_transfer_behaviors(self):
 		return self.m_blnTransferBehaviors
 
